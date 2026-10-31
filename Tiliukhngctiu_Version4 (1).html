@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trang Web Cá Nhân</title>
+  <style>
+    :root {
+      --bg: #07131f;
+      --bg-2: #0d1d2d;
+      --panel: #101f2e;
+      --panel-2: #13283c;
+      --card: #162f46;
+      --card-2: #1a3654;
+      --line: rgba(148, 163, 184, 0.2);
+      --primary: #4ea1ff;
+      --primary-strong: #1d9bf0;
+      --text: #edf6ff;
+      --muted: #a7c0d9;
+      --soft: #d7e8ff;
+      --shadow: 0 18px 40px rgba(4, 12, 20, 0.65);
+      --danger: #ff5b7f;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(30, 109, 214, 0.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.12), transparent 25%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 100px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      margin-bottom: 18px;
+      color: var(--soft);
+    }
+
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), #7dd3fc);
+      border-radius: 999px;
+      margin: 14px auto 0;
+    }
+
+    .section-subtitle {
+      max-width: 720px;
+      margin: 0 auto 48px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 19, 31, 0.82);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .nav-menu a {
+      color: var(--soft);
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    .nav-menu a:hover {
+      color: var(--primary);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), #2d7af7);
+      color: white;
+      font-weight: 700;
+      box-shadow: 0 12px 28px rgba(29, 155, 240, 0.4);
+      transition: transform 0.2s ease;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
+
+    .hero {
+      padding: 100px 0 80px;
+      background: linear-gradient(135deg, rgba(19, 40, 60, 0.95), rgba(7, 19, 31, 0.9));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      right: -100px;
+      top: -120px;
+      background: rgba(78, 161, 255, 0.12);
+      border-radius: 50%;
+      filter: blur(30px);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 52px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: rgba(78, 161, 255, 0.08);
+      border: 1px solid rgba(78, 161, 255, 0.25);
+      color: var(--primary);
+      padding: 8px 14px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      line-height: 1.08;
+      letter-spacing: -0.06em;
+      margin-bottom: 18px;
+      color: var(--soft);
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero p {
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #2d7af7);
+      color: white;
+      box-shadow: 0 12px 30px rgba(29, 155, 240, 0.28);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      color: var(--text);
+    }
+
+    .stats {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .stat-box {
+      min-width: 150px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-box strong {
+      display: block;
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 4px;
+    }
+
+    .stat-box span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .profile-box {
+      background: linear-gradient(135deg, rgba(19, 40, 60, 0.82), rgba(13, 29, 45, 0.9));
+      border: 1px solid rgba(90, 160, 255, 0.2);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .profile-image {
+      height: 260px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #10283a 0%, #153552 100%);
+      font-size: 110px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .profile-content {
+      padding: 22px 20px 24px;
+    }
+
+    .profile-content h3 {
+      color: var(--soft);
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+
+    .profile-content p {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .mini-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    .mini-item {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      text-align: center;
+      padding: 12px 8px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .mini-item strong {
+      display: block;
+      color: var(--soft);
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 18px;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .check-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--soft);
+      font-weight: 600;
+    }
+
+    .check {
+      width: 26px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(16, 185, 129, 0.12);
+      border-radius: 50%;
+      color: #34d399;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .about-card {
+      background: linear-gradient(135deg, rgba(16, 31, 46, 1), rgba(18, 35, 52, 0.95));
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 30px 22px;
+    }
+
+    .about-card h3 {
+      color: var(--soft);
+      font-size: 1.4rem;
+      margin-bottom: 18px;
+    }
+
+    .skill-stack {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      gap: 14px;
+    }
+
+    .skill-box {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px 12px;
+      text-align: center;
+      color: var(--soft);
+      font-weight: 700;
+    }
+
+    .skill-box span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .services-grid,
+    .projects-grid,
+    .contact-grid {
+      display: grid;
+      gap: 26px;
+    }
+
+    .services-grid {
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+    }
+
+    .projects-grid {
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+    }
+
+    .contact-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .service-card,
+    .project-card,
+    .contact-card {
+      background: linear-gradient(180deg, rgba(19, 35, 51, 0.96), rgba(12, 22, 33, 0.96));
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.22s ease, border-color 0.22s ease;
+    }
+
+    .service-card:hover,
+    .project-card:hover,
+    .contact-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(78, 161, 255, 0.5);
+    }
+
+    .icon-box {
+      width: 68px;
+      height: 68px;
+      border-radius: 18px;
+      margin: 22px 22px 0;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(78, 161, 255, 0.14), rgba(25, 81, 149, 0.18));
+      border: 1px solid rgba(78, 161, 255, 0.2);
+      color: var(--primary);
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .service-content,
+    .project-content {
+      padding: 20px 22px 24px;
+    }
+
+    .service-card h3,
+    .project-card h3,
+    .contact-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: var(--soft);
+    }
+
+    .service-card p,
+    .project-card p,
+    .contact-card p {
+      color: var(--muted);
+    }
+
+    .project-thumb {
+      height: 180px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(78, 161, 255, 0.15), rgba(17, 97, 174, 0.2));
+      font-size: 3rem;
+      color: var(--primary);
+      font-weight: 700;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .project-tag {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(78, 161, 255, 0.1);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .contact-card {
+      padding: 28px 24px;
+    }
+
+    .contact-info {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .contact-badge {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: rgba(78, 161, 255, 0.1);
+      border: 1px solid rgba(78, 161, 255, 0.2);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    label {
+      color: var(--soft);
+      font-weight: 700;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 14px 14px;
+      font: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(78, 161, 255, 0.7);
+      box-shadow: 0 0 0 4px rgba(78, 161, 255, 0.12);
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .like-box {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .like-box p {
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    #likeBtn {
+      background: linear-gradient(135deg, var(--danger), #ff7c8a);
+      color: white;
+      min-width: 190px;
+      box-shadow: 0 12px 30px rgba(255, 91, 127, 0.28);
+    }
+
+    footer {
+      background: #040d16;
+      color: #dbeafe;
+      text-align: center;
+      padding: 24px 0;
+    }
+
+    footer p {
+      font-size: 0.96rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .about-grid,
+      .contact-grid,
+      .services-grid,
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card {
+        max-width: 560px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .nav-menu {
+        position: absolute;
+        top: 78px;
+        left: 18px;
+        right: 18px;
+        background: rgba(10, 20, 31, 0.96);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 18px 16px;
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        box-shadow: var(--shadow);
+      }
+
+      .nav-menu.open {
+        display: flex;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">Xin chào!</div>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="#about">Giới thiệu</a>
+        <a href="#services">Dịch vụ</a>
+        <a href="#projects">Dự án</a>
+        <a href="#contact">Liên hệ</a>
+      </nav>
+
+      <a href="#contact" class="nav-cta">Kết nối</a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Mở menu">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Frontend • Content • Design</div>
+          <h1>Tôi là <span>[Tên của bạn]</span></h1>
+          <p>
+            Tôi là một freelancer / sinh viên / nhà phát triển nội dung đam mê công nghệ,
+            sáng tạo và thiết kế những trải nghiệm trực quan đẹp mắt, dễ sử dụng.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-primary">Kết nối với tôi</a>
+            <a href="#projects" class="btn btn-secondary">Xem dự án</a>
+          </div>
+
+          <div class="stats">
+            <div class="stat-box">
+              <strong>1+</strong>
+              <span>Năm kinh nghiệm</span>
+            </div>
+            <div class="stat-box">
+              <strong>10+</strong>
+              <span>Dự án</span>
+            </div>
+            <div class="stat-box">
+              <strong>24/7</strong>
+              <span>Học hỏi</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="profile-box">
+            <div class="profile-image">👋</div>
+            <div class="profile-content">
+              <h3>[Tên của bạn]</h3>
+              <p>Designer / Frontend / Content Creator</p>
+
+              <div class="mini-list">
+                <div class="mini-item">
+                  <strong>UI</strong>
+                  Design
+                </div>
+                <div class="mini-item">
+                  <strong>Web</strong>
+                  Frontend
+                </div>
+                <div class="mini-item">
+                  <strong>SEO</strong>
+                  Content
+                </div>
+                <div class="mini-item">
+                  <strong>UX</strong>
+                  Research
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <h2 class="section-title">Giới thiệu</h2>
+        <p class="section-subtitle">
+          Tôi luôn tìm cách tạo ra những sản phẩm đẹp, rõ ràng và hiệu quả,
+          phù hợp với nhu cầu người dùng và mục tiêu của dự án.
+        </p>
+
+        <div class="about-grid">
+          <div class="about-text">
+            <p>
+              Tôi thích học hỏi và sáng tạo. Mỗi dự án tôi làm đều hướng đến sự rõ ràng,
+              dễ nhìn và mang lại giá trị thực tế cho khách hàng hoặc cộng đồng.
+            </p>
+            <p>
+              Với niềm đam mê về công nghệ, thiết kế và nội dung số, tôi đang từng bước xây dựng
+              những dự án cá nhân và chuyên nghiệp, từ landing page, portfolio cho đến nội dung truyền thông.
+            </p>
+
+            <ul class="check-list">
+              <li><span class="check">✓</span> Tập trung vào trải nghiệm người dùng</li>
+              <li><span class="check">✓</span> Đam mê sáng tạo và cải tiến liên tục</li>
+              <li><span class="check">✓</span> Luôn học hỏi công nghệ mới</li>
+            </ul>
+          </div>
+
+          <div class="about-card">
+            <h3>Kỹ năng chính</h3>
+            <div class="skill-stack">
+              <div class="skill-box">HTML5 <span>Layout</span></div>
+              <div class="skill-box">CSS3 <span>UI/UX</span></div>
+              <div class="skill-box">JavaScript <span>Logic</span></div>
+              <div class="skill-box">Figma <span>Design</span></div>
+              <div class="skill-box">Content <span>Writing</span></div>
+              <div class="skill-box">Marketing <span>Branding</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <h2 class="section-title">Dịch vụ</h2>
+        <p class="section-subtitle">
+          Tôi cung cấp các dịch vụ từ thiết kế, phát triển giao diện đến xây dựng nội dung hiện đại.
+        </p>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <div class="icon-box">✦</div>
+            <div class="service-content">
+              <h3>Thiết kế UI/UX</h3>
+              <p>Tạo ra giao diện đẹp mắt, dễ sử dụng và tối ưu trải nghiệm người dùng trên web.</p>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <div class="icon-box">⚡</div>
+            <div class="service-content">
+              <h3>Landing Page</h3>
+              <p>Xây dựng landing page chuyên nghiệp, rõ mục tiêu, thu hút khách hàng và tăng tương tác.</p>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <div class="icon-box">✍️</div>
+            <div class="service-content">
+              <h3>Nội dung sáng tạo</h3>
+              <p>Viết nội dung thương hiệu, bài viết, mô tả sản phẩm và sáng tạo nội dung số hiệu quả.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="container">
+        <h2 class="section-title">Dự án nổi bật</h2>
+        <p class="section-subtitle">
+          Một số dự án tiêu biểu thể hiện phong cách và khả năng sáng tạo của tôi.
+        </p>
+
+        <div class="projects-grid">
+          <article class="project-card">
+            <div class="project-thumb">📘</div>
+            <div class="project-content">
+              <h3>Blog cá nhân</h3>
+              <p>Chia sẻ kiến thức, kinh nghiệm học tập và nhật ký sáng tạo.</p>
+              <span class="project-tag">Blog</span>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-thumb">🎨</div>
+            <div class="project-content">
+              <h3>Portfolio</h3>
+              <p>Trang giới thiệu sản phẩm, phong cách thiết kế và các tác phẩm sáng tạo.</p>
+              <span class="project-tag">Portfolio</span>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-thumb">🌱</div>
+            <div class="project-content">
+              <h3>Dự án cộng đồng</h3>
+              <p>Hỗ trợ truyền thông cho các hoạt động môi trường và tình nguyện.</p>
+              <span class="project-tag">Community</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <h2 class="section-title">Liên hệ</h2>
+        <p class="section-subtitle">
+          Nếu bạn muốn hợp tác, làm việc cùng hoặc trao đổi ý tưởng, hãy liên hệ với tôi.
+        </p>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Thông tin liên hệ</h3>
+
+            <div class="contact-info">
+              <div class="contact-item">
+                <div class="contact-badge">✉</div>
+                <span><strong>Email:</strong> ban@example.com</span>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-badge">☎</div>
+                <span><strong>Điện thoại:</strong> 0123 456 789</span>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-badge">📍</div>
+                <span><strong>Địa chỉ:</strong> TP.HCM, Việt Nam</span>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-badge">🌐</div>
+                <span><strong>Website:</strong> yoursite.com</span>
+              </div>
+            </div>
+
+            <div class="like-box">
+              <p>Yêu thích trang web này? Hãy để lại 1 tim nhé!</p>
+              <button id="likeBtn" class="btn">❤️ Thả tim (<span id="likeCount">0</span>)</button>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <h3>Gửi tin nhắn</h3>
+            <form>
+              <div class="field">
+                <label for="name">Họ và tên</label>
+                <input id="name" type="text" placeholder="Nhập họ tên..." />
+              </div>
+
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" type="email" placeholder="Nhập email..." />
+              </div>
+
+              <div class="field">
+                <label for="message">Nội dung</label>
+                <textarea id="message" placeholder="Viết tin nhắn của bạn..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Gửi tin nhắn</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Bản quyền thuộc về [Tên của bạn]. Thiết kế bởi AI.</p>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.getElementById("navMenu");
+
+    menuToggle.addEventListener("click", () => {
+      navMenu.classList.toggle("open");
+    });
+
+    const likeBtn = document.getElementById("likeBtn");
+    const likeCount = document.getElementById("likeCount");
+    let count = 0;
+
+    likeBtn.addEventListener("click", () => {
+      count += 1;
+      likeCount.textContent = count;
+      likeBtn.style.transform = "scale(1.06)";
+      setTimeout(() => {
+        likeBtn.style.transform = "scale(1)";
+      }, 120);
+    });
+
+    document.querySelector("form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Cảm ơn bạn! Tin nhắn của bạn đã được ghi nhận.");
+    });
+  </script>
+</body>
+</html>
